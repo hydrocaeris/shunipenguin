@@ -1,41 +1,19 @@
-import './App.css';
-import React, { useState, useEffect } from 'react';
-import ReactDOM from "react-dom/client";
+import React, { useMemo } from 'react';
 
-function App() {
- 
+const Jumlah = (props) => {
+  // Menggunakan useMemo untuk menghitung jumlah array hanya jika props.arr berubah
+  const sum = useMemo(() => {
+    if (props.arr) {
+      return props.arr.reduce((total, num) => total + num, 0);
+    }
+    return 0;
+  }, [props.arr]);
 
-  function Contoh() {
-    const [message, setMessage] = useState('Mount'); // Deklarasi state message, global scope di dalam komponen
-  
-    // useEffect untuk mengupdate document.title setiap kali message berubah
-    useEffect(() => {
-      document.title = message;
-    }, [message]); // dependency: message
-  
-    // Optional: useEffect untuk menangani unmount, update document.title saat komponen akan di-unmount
-    useEffect(() => {
-      return () => {
-        document.title = "Unmount";
-      };
-    }, []);
-  
-    // Fungsi untuk mengubah message menjadi "Updated" saat tombol diklik
-    const handleClick = () => {
-      setMessage('Updated');
-    };
-  
-    return (
-      <div>
-        <p>Message: {message}</p>
-        <button onClick={handleClick}>Click</button>
-      </div>
-    );
-  }
-  
-  const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(<Contoh />);
-  
+  return (
+    <div>
+      <p>Jumlah: {sum}</p>
+    </div>
+  );
 }
 
-export default App;
+export default Jumlah;
