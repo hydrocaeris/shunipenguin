@@ -1,19 +1,20 @@
-import React, { useMemo } from 'react';
+import React, { useState } from "react";
+import { withTitle } from "./withTitle";
+import { ThemeContext, Theme } from "./ThemeContext";
+import "./App.css"; // Import file CSS
 
-const Jumlah = (props) => {
-  // Menggunakan useMemo untuk menghitung jumlah array hanya jika props.arr berubah
-  const sum = useMemo(() => {
-    if (props.arr) {
-      return props.arr.reduce((total, num) => total + num, 0);
-    }
-    return 0;
-  }, [props.arr]);
+const App = (props) => {
+  const [darkMode, setDarkMode] = useState(false);
 
   return (
-    <div>
-      <p>Jumlah: {sum}</p>
-    </div>
+    <ThemeContext.Provider value={{ darkMode, setDarkMode }}>
+      {/* Tambahkan kelas CSS berdasarkan darkMode */}
+      <div className={`App ${darkMode ? "dark" : ""}`}>
+        <h1>Halaman: {props.title}</h1>
+        <Theme />
+      </div>
+    </ThemeContext.Provider>
   );
-}
+};
 
-export default Jumlah;
+export default withTitle(App);
